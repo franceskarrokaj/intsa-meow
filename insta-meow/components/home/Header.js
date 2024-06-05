@@ -33,6 +33,7 @@ const Header = () => {
                         source={{
                             url : 'https://img.icons8.com/fluency-systems-regular/60/ffffff/facebook-messenger.png'
                         }}
+                        
                         style={styles.icon}
                     />
                 </TouchableOpacity>
