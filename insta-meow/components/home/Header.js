@@ -29,11 +29,13 @@ const Header = () => {
                     />
                 </TouchableOpacity>
                 <TouchableOpacity>
+                    <View style={styles.unreadBadge}>
+                        <Text style={styles.unreadBadgeText}>11</Text>
+                    </View>
                     <Image
                         source={{
                             url : 'https://img.icons8.com/fluency-systems-regular/60/ffffff/facebook-messenger.png'
                         }}
-                        
                         style={styles.icon}
                     />
                 </TouchableOpacity>
@@ -69,6 +71,20 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         //color: 'white',
     },
+
+    unreadBadge: {
+        backgroundColor: '#FF3250',
+        position: 'absolute',
+        left: 20,
+        bottom: 18,
+        borderRadius: 25,
+        width: 25,
+        height: 18,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 100,
+    },
+
 })
 
 export default Header;
