@@ -85,6 +85,11 @@ const styles = StyleSheet.create({
         zIndex: 100,
     },
 
+    unreadBadgeText: {
+        color: 'white',
+        fontWeight: '600',
+    },
+
 })
 
 export default Header;
