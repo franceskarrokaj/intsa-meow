@@ -1,6 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image} from 'react-native';
+import { StyleSheet, View, Text, Image, name} from 'react-native';
 import { Divider } from 'react-native-elements';
+
+const postFooterIcons = [
+    {
+        name: 'Like',
+        imageUrl: 'https://img.icons8.com/fluency-systems-regular/60/ffffff/'
+    },
+]
 
 const Post = ( {post} ) => {
     return (
@@ -35,10 +42,17 @@ const PostHeader = ( {post} ) => (
 )
 
 const PostImage = ( {post} ) => (
-    <Image 
-        source={{uri: post.imageUrl}}
-        style={{height: '100%', resizeMode: "cover" }}
-    />
+    <View 
+        style={{
+            width: '100%',
+            height: 400,
+        }}    
+    >
+        <Image 
+            source={{uri: post.imageUrl}}
+            style={{height: '100%', resizeMode: "cover" }}
+        />
+    </View>
 )
 
 const styles = StyleSheet.create({
