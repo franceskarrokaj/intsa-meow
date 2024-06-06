@@ -2,7 +2,7 @@ import { USERS } from './users';
 
 export const POSTS = [
     {
-        imageUrl: 'https://images.unsplash.com/photo-1612838320302-3b3b3f1b3b3b',
+        imageUrl: 'https://images.unsplash.com/photo-1541698444083-023c97d3f4b6',
         user: USERS[0].user,
         likes: 128,
         caption: 'This is a simple caption.',
@@ -20,7 +20,7 @@ export const POSTS = [
     },
 
     {
-        imageUrl: 'https://images.unsplash.com/photo-1612838320302-3b3b3f1b3b3b',
+        imageUrl: 'https://images.unsplash.com/photo-1542204637-e67bc7d41e48',
         user: USERS[1].user,
         likes: 180,
         caption: 'WOW, a caption.',
@@ -38,7 +38,7 @@ export const POSTS = [
     },
 
     {
-        imageUrl: 'https://images.unsplash.com/photo-1612838320302-3b3b3f1b3b3b',
+        imageUrl: 'https://images.unsplash.com/photo-1516483638261-f4dbaf036963',
         user: USERS[2].user,
         likes: 200,
         caption: 'This is a caption.',

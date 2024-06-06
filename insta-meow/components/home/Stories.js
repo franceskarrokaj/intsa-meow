@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: "#ff8501", 
     },
-
 })
 
 export default Stories;
