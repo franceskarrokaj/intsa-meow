@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image, name, TouchableOpacity} from 'react-native';
 import { Divider } from 'react-native-elements';
+import post from "../../data/post";
 
 const postFooterIcons = [
     {
@@ -94,7 +95,7 @@ const Icon = ({imgStyle, imageUrl}) => (
     </TouchableOpacity>
 )
 
-const Likes = ({post}) => {
+const Likes = ( {post} ) => {
     if (!post) {
         return null;
     }
@@ -104,7 +105,7 @@ const Likes = ({post}) => {
     return (
         <View style={{flexDirection:"row", marginTop: 4}}>
             <Text style={{color:"white", fontWeight:"600"}}>
-                {post.Likes.toLocaleString('en')}
+                {post.Likes.toLocaleString('en')} meows
             </Text>
         </View>
     );
