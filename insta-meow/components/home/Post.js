@@ -33,6 +33,7 @@ const Post = ( {post} ) => {
             <PostImage post={post} />
             <View style={{marginHorizontal: 15, marginTop: 10}}>
                 <PostFooter />
+                <Likes post={post} />
             </View>
         </View>
     );
@@ -56,7 +57,6 @@ const PostHeader = ( {post} ) => (
                 {post.user}
             </Text>
         </View>
-
     </View>
 )
 
@@ -75,11 +75,15 @@ const PostImage = ( {post} ) => (
 )
 
 const PostFooter = () => (
-    <View style={{flexDirection: "row"}}>
+    <View style={{flexDirection: "row" }}>
         <View style={styles.leftFooterIconContainer}>
             <Icon imgStyle={styles.footerIcon} imageUrl={postFooterIcons[0].imageUrl}/>
             <Icon imgStyle={styles.footerIcon} imageUrl={postFooterIcons[1].imageUrl}/>
             <Icon imgStyle={styles.footerIcon} imageUrl={postFooterIcons[2].imageUrl}/>
+        </View>
+
+        <View style={{flex:1, alignItems:"flex-end"}}>
+            <Icon imgStyle={styles.footerIcon} imageUrl={postFooterIcons[3].imageUrl}/>
         </View>
     </View>
 )
@@ -88,16 +92,30 @@ const Icon = ({imgStyle, imageUrl}) => (
     <TouchableOpacity>
         <Image style={imgStyle} source={{ uri: imageUrl }} />
     </TouchableOpacity>
-
-
 )
+
+const Likes = ({post}) => {
+    if (!post) {
+        return null;
+    }
+
+    post.Likes = 1000;
+
+    return (
+        <View style={{flexDirection:"row", marginTop: 4}}>
+            <Text style={{color:"white", fontWeight:"600"}}>
+                {post.Likes.toLocaleString('en')}
+            </Text>
+        </View>
+    );
+}
 
 const styles = StyleSheet.create({
     story: {
         width: 35,
         height: 35,
         borderRadius: 50,
-        marginLeft: 1.6,
+        marginLeft: 6,
         borderWidth: 1.6,
         borderColor: "#ff8501", 
     },
