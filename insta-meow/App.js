@@ -1,10 +1,17 @@
-import { View, Text } from "react-native";
 import * as React from "react";
+import SignedInStack from "./navigation";
 import HomeScreen from "./screens/HomeScreen";
-import NewPostScreen from "./screens/NewPostScreen";
 
 export default function App() {
+  // Check if user is signed in
+  
+  // If user is signed in, return HomeScreen
+
+  // If user is not signed in, return SignedInStack
+
+  //return <SignedInStack />
   return (
-    <NewPostScreen />
+    <SignedInStack/>
   );
+
 }
