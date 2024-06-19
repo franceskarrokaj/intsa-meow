@@ -1,10 +1,22 @@
 import React from 'react';
 import { StyleSheet, View , Text, Image, TouchableOpacity} from 'react-native';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
+
+
+const handleSignOut = async ({navigation}) => {
+    try {
+        await signOut(auth);
+        navigation.replace('LoginScreen');
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 const Header = ({navigation}) => {
     return (
         <View style={styles.container}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleSignOut({navigation})}>
                     <Image
                         style={styles.logo} 
                         source={require('../../assets/instagram-logo.png')}

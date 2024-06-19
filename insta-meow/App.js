@@ -1,6 +1,9 @@
 import * as React from "react";
 import SignedInStack from "./navigation";
 import HomeScreen from "./screens/HomeScreen";
+import { registerRootComponent } from 'expo';
+
+registerRootComponent(App);
 
 export default function App() {
   // Check if user is signed in
@@ -15,3 +18,4 @@ export default function App() {
   );
 
 }
+

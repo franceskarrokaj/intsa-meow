@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
-import { StyleSheet, TextInput, View, Text, Pressable, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, Alert, View, Text, Pressable, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationContainer } from '@react-navigation/native';
 import {Formik} from 'formik';
 import * as yup from 'yup';
 import Validator from 'email-validator';
+import { auth } from '../../firebase';
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 
 const LogInForm = ({navigation}) => {
 
@@ -19,13 +22,44 @@ const LogInForm = ({navigation}) => {
             .required(),
     });
 
+    const onLogin = async (email, password) => {
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            console.log("Firebase login success!", email, password);
+            
+            navigation.navigate("HomeScreen");
+        } catch (error) {
+            Alert.alert (
+                "Opps! ",
+
+                error.message,
+                [
+                    {
+                        text: 'OK',
+                        onPress: () => console.log('OK'),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'SignUp',
+                        onPress: () => navigation.push("SignUpScreen")
+                    }
+                ]
+            )
+        }
+    }
+
+    
+
     return (
         <View style={styles.wrapper}>
             <Formik
                 initialValues={{email: '', password: ''}}
                 validationSchema={LoginFormSchema}
                 validationOnMount={true}
-                onSubmit={values => {console.log(values)}}
+                onSubmit={values => {
+                    console.log(values)
+                    onLogin(values.email, values.password)
+                }}
             >
                 {({isValid, values, errors, handleChange, handleBlur, handleSubmit}) =>
                 (
@@ -41,6 +75,7 @@ const LogInForm = ({navigation}) => {
                         }
                     ]}>
                         <TextInput 
+                            name="email"
                             placeholderTextColor="#444"
                             placeholder="Phone number, username or email"
                             autoCapitalize='none'
@@ -48,8 +83,9 @@ const LogInForm = ({navigation}) => {
                             textContentType='emailAddress'
                             autoFocus={true}
                             onChangeText={handleChange('email')}
-                            onBlur={handleBlur('email')}
+                            // onBrlur={handleBlur('email')}
                             value={values.email}
+                            id="email"
                         />
                     </View>
 
@@ -61,6 +97,7 @@ const LogInForm = ({navigation}) => {
                             },
                     ]}>
                         <TextInput 
+                            name="password"
                             placeholderTextColor="#444"
                             placeholder="Password"
                             autoCapitalize='none'
@@ -68,8 +105,9 @@ const LogInForm = ({navigation}) => {
                             textContentType='password'
                             secureTextEntry={true}
                             onChangeText={handleChange('password')}
-                            onBlur={handleBlur('password')}
+                            // onBlur={handleBlur('password')}
                             value={values.password}
+                            id="password"
                         />
                     </View>
                     <View style={{alignItems:"flex-end", marginBottom: 30}}>
@@ -88,7 +126,7 @@ const LogInForm = ({navigation}) => {
 
                     <View style={styles.signupContainer}>
                         <Text>Don't have an account yet?</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.push("SignUpScreen")} >
                             <Text style={{color: '#6BB0F5'}}>   Sign up</Text>
                         </TouchableOpacity>
 
