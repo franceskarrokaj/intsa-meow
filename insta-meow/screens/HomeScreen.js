@@ -4,19 +4,22 @@ import BottomTabs, { bottomTabsIcons } from '../components/home/BottomTabs';
 import Header from '../components/home/Header';
 import Post from '../components/home/Post';
 import Stories from '../components/home/Stories';
-import { collection, db, getPosts } from '../firebase';
+import { db, getPosts } from '../firebase';
+import { getDoc, getDocs } from 'firebase/firestore';
+import { collection, collectionGroup } from 'firebase/firestore';
 
 const HomeScreen = ({navigation}) => {
 
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        getPosts(db);
         const fetchPosts = async () => {
-            const data = await getPosts(db);
-            console.log('TEdrrT');
-
-            console.log(data);
+            // const snap = db.collection('posts').get();
+            // console.log(snap);
+            // const data = getDocs(collection(db, 'posts'));
+            const snapshot = await getDocs(collection(db, 'posts'));
+            const posts = snapshot.docs.map(doc => doc.data());
+            setPosts(posts);
         }
         fetchPosts();
         // db.collection('posts')

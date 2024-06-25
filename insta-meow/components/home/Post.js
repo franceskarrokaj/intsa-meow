@@ -2,7 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Text, Image, name, TouchableOpacity} from 'react-native';
 import { Divider } from 'react-native-elements';
 import post from "../../data/post";
-import { db, firebase } from '../../firebase';
+import {db, firebase, auth} from '../../firebase';
+import { addDoc, collection } from 'firebase/firestore';
+
 
 const postFooterIcons = [
     {
@@ -30,8 +32,13 @@ const postFooterIcons = [
 const Post = ( {post} ) => {
 
     const handleLike = () => {
+
+        if (!post.likes_by_users) {
+            post.likes_by_users = [];
+        }
+    
         const currentLikesStatus = !post.likes_by_users.includes(
-            firebase.auth().currentUser.email
+            auth().currentUser.email
         );
 
         db.collection('users')
@@ -41,10 +48,10 @@ const Post = ( {post} ) => {
             .update({
                 likes_by_users: currentLikesStatus
                     ? firebase.firestore.FieldValue.arrayUnion(
-                        firebase.auth().currentUser.email
+                        auth().currentUser.email
                     )
                     : firebase.firestore.FieldValue.arrayRemove(
-                        firebase.auth().currentUser.email
+                        auth().currentUser.email
                     )
             })
 
@@ -64,9 +71,9 @@ const Post = ( {post} ) => {
             <View style={{marginHorizontal: 15, marginTop: 10}}>
                 <PostFooter post={post} handleLike={handleLike}/>
                 <Likes post={post} />
-                <Caption post={post} />
+                {/* <Caption post={post} />
                 <CommentsSection post={post} />
-                <Comments post={post} />
+                <Comments post={post} /> */}
             </View>
         </View>
     );
@@ -113,7 +120,7 @@ const PostFooter = ({handleLike, post}) => (
             <TouchableOpacity onPress={() => handleLike(post)}>
                 <Image 
                     style={styles.footerIcon}
-                    source={{uri: post.likes_by_users.includes(
+                    source={{uri: post.likes_by_users && post.likes_by_users.includes(
                         firebase.auth().currentUser.email )
                         ? postFooterIcons[0].likedImageUrl
                         : postFooterIcons[0].imageUrl, 
@@ -137,7 +144,7 @@ const Icon = ({imgStyle, imageUrl}) => (
 )
 
 const Likes = ( {post} ) => {
-    if (!post) {
+    if (!post || !post.likes_by_users) {
         return null;
     }
 
@@ -149,7 +156,6 @@ const Likes = ( {post} ) => {
         </View>
     );
 }
-
 const Caption = ( {post} ) => (
     <View style={{marginTop: 5}}>
         <Text style={{color:"white"}}>

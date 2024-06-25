@@ -8,7 +8,7 @@ import Validator from 'email-validator';
 import { FirebaseError } from 'firebase/app';
 import { db , getAuth} from '../../firebase';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from '../../firebase';
 
 
@@ -37,19 +37,18 @@ const SignUpForm = ({navigation}) => {
 
     const onSignUp = async(email, password, username) => {
         try {
-            const authUser = await FirebaseError
+                const authUser = await FirebaseError
                 
-                await createUserWithEmailAndPassword(auth, email, password);
-            console.log("Firebase user created successfully: ", email);
+               await createUserWithEmailAndPassword(auth, email, password);
+                console.log("Firebase user created successfully: ", email);
 
-            db.collection('users')
-                .doc(authUser.user.email)
-                .set( {
-                    owner_uid: authUser.user.uid,
-                    username: username,
-                    email: authUser.user.email,
-                    profile_picture: await getRandomProfilePicture(),
+                console.log(authUser)
+
+                await updateProfile(auth.currentUser, {
+                    displayName: username,
+                    photoURL: "https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcQOO0X7mMnoYz-e9Zdc6Pe6Wz7Ow1DcvhEiaex5aSv6QJDoCtcooqA7UUbjrphvjlIc"
                 })
+
         } catch (error) { 
             Alert.alert("Error: ", error.message);
         }
